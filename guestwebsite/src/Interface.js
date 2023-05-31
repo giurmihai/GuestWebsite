@@ -42,13 +42,63 @@ function Interface() {
         fetchData();
     }, []);
 
+    // Get from server the website ids for the userId
+    const [websites, setWebsites] = useState('');
+    async function getWebsites()
+    {
+        console.log(currentUser.id);
+        const requestOptions = {
+            method: 'POST', headers: {"Content-Type":"application/json"},
+            body:JSON.stringify({
+                userId:currentUser.id
+            })
+        }
+        console.log(requestOptions)
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/getWebsite`, requestOptions)
+        const data = await response.json()
+        setWebsites(data);
+        console.log(data);
+    }
+
+    //Check if the correct user is logged in for the correct website id.
+    // If there is a value for the website id, search for the value for websites with user id
+    useEffect(()=>{
+        if (value)
+        {
+            getWebsites();
+        }
+    },[value])
+
+    //The actual verification of the correct user
+    const [correctUser, setCorrectUser] = useState(false);
+    useEffect(()=>{
+        console.log(typeof(websites.website));
+        
+        if(typeof(websites.website)=='object')
+        {
+            console.log("mama")
+            console.log("Mama: ",websites.website[0].id)
+            console.log(value);
+            console.log(value==websites.website[0].id);
+            for (var index=0; index<websites.website.length; index++)
+            {
+                console.log("tata", websites.website[index].id)
+                if (websites.website[index].id==value)
+                {
+                    setCorrectUser(true);
+                    console.log(currentUser)
+                }
+            }
+        }
+    },[websites])
+
 
 
 
 
     return (
         <>
-            {isLoggedIn ?
+            {correctUser&&isLoggedIn ?
                 (<div>
                     <div id='card'>
 
