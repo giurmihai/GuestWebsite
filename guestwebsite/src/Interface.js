@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './Interface.css';
-import GoogleLoginButton from './GoogleLoginButton';
 
 function Interface() {
 
@@ -26,7 +25,11 @@ function Interface() {
     //Variables for login
     const [emailLogin, setEmailLogin] = useState('');
     const [passwordLogin, setPasswordLogin] = useState('');
+    const [correctUserAndWebsite, setCorrectUserAndWebsite] = useState(false);
+    const [currentUser, setCurrentUser] = useState('')
+    const [currentWebsite, setCurrentWebsite] = useState('')
 
+    //Login function - "Success!" or "user not found"
     async function verifyLogin() {
         const requestOptions = {
             method: 'POST',
@@ -39,7 +42,38 @@ function Interface() {
         }
         const response = await fetch(`${process.env.REACT_APP_API_URL}/loginWithEmail`, requestOptions)
         const data = await response.json()
-        console.log(data);
+        if (data.message=="Success!")
+        {
+            const requestDataWebsite = {
+                method:'POST',
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({
+                    userId:data.user[0].id
+                })
+            }
+            const resp = await fetch (`${process.env.REACT_APP_API_URL}/getWebsite`, requestDataWebsite)
+            const data1 = await resp.json();
+            
+            console.log(data1.website.length)
+            if (data1.website.length>0)
+            {
+                for (var i=0; i<data1.website.length; i++)
+                {
+                    if (data1.website[i].userId==value)
+                    {
+                        setCorrectUserAndWebsite(true)
+                        setCurrentUser(data.user[0])
+                        setCurrentWebsite(data1.website[i])
+                    }else
+                    {
+                        console.log("Nu-s egale:",data1.website[i].userId,value)
+                    }
+                }
+            }
+        }else
+        {
+            console.log("Wrong email or password")
+        }
     }
 
 
@@ -47,14 +81,14 @@ function Interface() {
 
     return (
         <>
-            {1>2 ?
+            {correctUserAndWebsite ?
                 (<div>
                     <div id='card'>
 
                         <div className="card text-bg-light mb-3">
-                            <div className="card-header"><h5>Website Name</h5></div>
+                            <div className="card-header"><h5>{currentWebsite.name}</h5></div>
                             <div className="card-body">
-                                <p className="card-text">Logged in as: {} </p>
+                                <p className="card-text">Logged in as: {currentUser.given_name} </p>
                                 <p><a className="nav-link" href="logout">Logout</a></p>
                             </div>
                         </div>
