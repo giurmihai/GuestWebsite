@@ -6,3 +6,85 @@
     width: 50%;
     text-align: center;
 }
+
+#btnSendEmail{
+    float:none;
+    text-align: right;
+    margin-left: 1%;
+}
+
+.loginPage{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    float:none;
+    width: 25%;
+    text-align: center;
+}
+
+#butonLogin{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    float:left;
+    width: 100%;
+    text-align: center;
+}
+
+#butonGuest{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    float:left;
+    width: 100%;
+    text-align: center;
+}
+
+.listItem{
+    display: flex;
+    width: 100%;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    border: solid 1px;
+    border-color: gray;
+    border-radius: 10px;
+    padding: 0.25rem;
+    padding-left: 15px;
+    
+}
+.guestsText{
+    text-align: left;
+}
+.logout{
+    position: absolute;
+    top: 6.5%;
+    right: 2%;
+    color: black;
+    opacity: 75%;
+    text-decoration: none;
+    transition: ease-in-out 0.3s;
+}
+
+.logout:hover {
+    opacity: 100%;
+}
+
+.emailText{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.listGroup{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.descriereWebsite{
+    text-align: left;
+    font-size: large;
+}

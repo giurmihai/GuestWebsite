@@ -1,0 +1,32 @@
+.guestsPage{
+    margin: 0 auto;
+    float:none;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 25%;
+    text-align: center;
+}
+
+#Guestsheader{
+    text-align: left;
+}
+
+#listaGuests{
+    text-align: left;
+}
+
+#pula{
+    /* border: solid 1px gray; */
+    background-color: rgb(0, 0, 0);
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+    padding: 0.5rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+
+#decription{
+    text-align: left;
+}
