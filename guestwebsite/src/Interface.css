@@ -1,46 +1,45 @@
-#card{
+#card {
     margin: 0 auto;
-    float:none;
-    margin-top: 2%;
+    float: none;
+    margin-top: 1rem;
     margin-bottom: 2%;
-    width: 50%;
     text-align: center;
 }
 
-#btnSendEmail{
-    float:none;
+#btnSendEmail {
+    float: none;
     text-align: right;
     margin-left: 1%;
 }
 
-.loginPage{
+.loginPage {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     margin: 0 auto;
-    float:none;
+    float: none;
     width: 25%;
     text-align: center;
 }
 
-#butonLogin{
+#butonLogin {
     margin-top: 2%;
     margin-bottom: 2%;
-    float:left;
+    float: left;
     width: 100%;
     text-align: center;
 }
 
-#butonGuest{
+#butonGuest {
     margin-top: 2%;
     margin-bottom: 2%;
-    float:left;
+    float: left;
     width: 100%;
     text-align: center;
 }
 
-.listItem{
+.listItem {
     display: flex;
     width: 100%;
     position: relative;
@@ -51,14 +50,13 @@
     border-radius: 10px;
     padding: 0.25rem;
     padding-left: 15px;
-    
+    margin-bottom: 0.5rem;
+
 }
-.guestsText{
-    text-align: left;
-}
-.logout{
+
+.logout {
     position: absolute;
-    top: 6.5%;
+    top: 4%;
     right: 2%;
     color: black;
     opacity: 75%;
@@ -70,13 +68,13 @@
     opacity: 100%;
 }
 
-.emailText{
+.emailText {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
 }
 
-.listGroup{
+.listGroup {
     display: flex;
     position: relative;
     justify-content: center;
@@ -84,7 +82,58 @@
     width: 100%;
 }
 
-.descriereWebsite{
+.descriereWebsite {
     text-align: left;
     font-size: large;
+}
+
+.noGuestsText {
+    margin-right: 1%;
+}
+
+.guestsTexts {
+    display: flex;
+    justify-content: space-between;
+}
+
+.leftText {
+    margin-left: 1%
+}
+
+.cardUpdates{
+    margin-top: 1rem;
+    margin-bottom: 2%;
+    text-align: center;
+    width: 100%;
+}
+
+#updateSubjectInput{
+    margin-bottom: 2%;
+}
+
+
+#buttonPostUpdate{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 100%;
+}
+.UpdateDiv{
+    position: relative;
+    display: block;
+}
+.DivCePlm{
+    margin-bottom: 1%;
+}
+
+.guestsDiv{
+    display: flexbox ;
+    justify-content:center;
+    align-items:center;
+    flex-direction: row;
+    position: relative;
+    width:100%;
+}
+
+.oneUpdateText{
+    text-align: left;
 }

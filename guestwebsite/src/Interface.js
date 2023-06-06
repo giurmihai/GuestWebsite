@@ -85,59 +85,148 @@ function Interface() {
 
     useEffect(() => {
         getGuests();
+        getUpdates();
     }, [correctUserAndWebsite])
 
 
-    async function doSomething(index, email) {
-        console.log(email);
+    async function SendInvitation(index, email) {
+        const emailContent = `You were invited to ${currentWebsite.name}`
+        const emailSubject = `Invitation to event`;
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/send-email`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ email:email })
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email, emailContent: emailContent, emailSubject: emailSubject })
             });
-        
+
             if (response.ok) {
-              console.log('Email sent successfully!');
+                console.log('Email sent successfully!');
             } else {
-              console.log('Failed to send email.');
+                console.log('Failed to send email.');
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Error:', error);
-          }
+        }
     }
+
+
+    //Get updates for the current website.
+    const [updates, setUpdates] = useState([])
+    async function getUpdates() {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                webId: value
+            })
+        }
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/updatesWebId`, requestOptions)
+        const data = await response.json();
+        setUpdates(data);
+    }
+
+    const[updateBody,setUpdateBody]=useState('')
+    const[updateSubject,setUpdateSubject]=useState('')
+    async function postUpdate()
+    {
+        const fullName = currentUser.name + " " + currentUser.given_name
+        const requestOptions = {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({subject:updateSubject, content:updateBody,websiteId:currentWebsite.id,creator:fullName})
+        }
+        
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/updates`,requestOptions);
+        const data = await response.json();
+        console.log(data);
+        getUpdates();
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleString('en-US', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        });
+      }
 
 
     return (
         <>
             {correctUserAndWebsite ?
-                (<div>
-                    <div id='card'>
-
-                        <div className="card text-bg-light mb-3">
-                            <div className="card-header">
-                                <h3>{currentWebsite.name}</h3>
-                                <a className="logout" href="logout">Logout</a>
-                            </div>
-                            <div className="card-body">
-                                <p className="descriereWebsite">{currentWebsite.description} </p>
-                                <hr></hr>
-                                <div className='guestsText'>Guests:</div>
-                                <div id='guestsDiv' className="listGroup">
-                                    {guests.map((element, index) => (
-                                        <div key={index} className="listItem">
-                                            <div className='emailText'>{element.email}</div>
-                                            <button id='btnSendEmail' className='btn btn-dark' onClick={() => doSomething(index, element.email)}>Send invitation</button>
+                (<div className='container text-center'>
+                    <div className="row">
+                        <div className="col-lg-7 col-12">
+                            <div className='cardUpdates'>
+                                <div className="card text-bg-light mb-3">
+                                    <div className="card-header">
+                                        <h3>Updates</h3>
+                                        <a className="logout" href="logout">Logout</a>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className='DivCePlm'>
+                                            <input type="text" className="form-control" id="updateSubjectInput" placeholder="Subject" value={updateSubject} onChange={(e) => setUpdateSubject(e.target.value)} ></input>
+                                            <textarea type="text" className="form-control" id="updateBodyInput" placeholder="Text for new update" value={updateBody} onChange={(e) => setUpdateBody(e.target.value)}></textarea>
+                                            <button id='buttonPostUpdate' className="btn btn-dark" onClick={() => postUpdate()}>Post update</button>
                                         </div>
-                                    ))}
+                                        <hr></hr>
+
+                                        <div className='UpdateDiv'>
+                                        {updates.map((element, index) => (
+                                                <div key={index} className='oneUpdateText'>
+                                                    <div className='SubjectUpdate'><b>Subject:</b> {element.subject}</div>
+                                                    <div className='CreatorUpdate'><b>Creator:</b> {element.creator}</div>
+                                                    <div className='DateUpdate'><b>Date:</b> {formatDate(element.createdAt)}</div>
+                                                    <div className='ContentUpdate'><b>Content:</b> {element.content}</div>
+                                                    
+                                                    <hr></hr>
+                                                </div>
+                                                
+                                            ))}
+                                            
+                                        </div>
+                                    </div>
                                 </div>
-
-
                             </div>
                         </div>
+                        <div className='col-lg-5 col-12'>
+                            <div id='card'>
 
+                                <div className="card text-bg-light mb-3">
+                                    <div className="card-header">
+                                        <h3>{currentWebsite.name}</h3>
+                                        
+                                    </div>
+                                    <div className="card-body">
+                                        <p className="descriereWebsite">{currentWebsite.description} </p>
+                                        <hr></hr>
+                                        <div className='guestsTexts'>
+                                            <div className='leftText'>Guests:</div>
+                                            <div className='noGuestsText'>No of guests: {guests.length}</div>
+                                        </div>
+
+                                        <div className="guestsDiv">
+                                            {guests.map((element, index) => (
+                                                <div key={index} className="listItem">
+                                                    <div className='emailText'>{element.email}</div>
+                                                    <button id='btnSendEmail' className='btn btn-dark' onClick={() => SendInvitation(index, element.email)}>Send invitation</button>
+                                                </div>
+                                            ))}
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
                     </div>
                 </div>)
                 : (<div className='loginPage'>
