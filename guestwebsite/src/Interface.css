@@ -56,8 +56,8 @@
 
 .logout {
     position: absolute;
-    top: 4%;
-    right: 2%;
+    top: 1rem;
+    right: 2rem;
     color: black;
     opacity: 75%;
     text-decoration: none;

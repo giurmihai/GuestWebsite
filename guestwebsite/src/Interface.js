@@ -178,7 +178,7 @@ function Interface() {
                                         <hr></hr>
 
                                         <div className='UpdateDiv'>
-                                        {updates.map((element, index) => (
+                                        {updates.slice().reverse().map((element, index) => (
                                                 <div key={index} className='oneUpdateText'>
                                                     <div className='SubjectUpdate'><b>Subject:</b> {element.subject}</div>
                                                     <div className='CreatorUpdate'><b>Creator:</b> {element.creator}</div>
