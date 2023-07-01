@@ -90,7 +90,7 @@ function Interface() {
 
 
     async function SendInvitation(index, email) {
-        const emailContent = `You were invited to ${currentWebsite.name}`
+        const emailContent = `You were invited to ${currentWebsite.name}! You can access the event website at http://${currentWebsite.publicip}`
         const emailSubject = `Invitation to event`;
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/send-email`, {
