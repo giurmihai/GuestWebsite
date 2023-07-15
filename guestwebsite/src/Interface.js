@@ -125,6 +125,7 @@ function Interface() {
         console.log("Wtf?",requestOptions);
         const response = await fetch(`${process.env.REACT_APP_API_URL}/updatesWebId`, requestOptions)
         const data = await response.json();
+        console.log(data);
         setUpdates(data);
     }
 
