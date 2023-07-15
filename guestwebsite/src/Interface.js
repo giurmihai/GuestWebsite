@@ -111,15 +111,33 @@ function Interface() {
         }
     }
 
+    function extractNumberFromString(str) {
+        let pos;
+        for (let i=0; i<str.length; i++)
+        {
+            if (/^[0-9]$/.test(str[i]))
+            {
+                // nothing
+            }
+            else
+            {
+                pos=i;
+                break;
+            }
+        }
+        let result = str.slice(0, pos);
+        return result
+      }
 
     //Get updates for the current website.
     const [updates, setUpdates] = useState([])
     async function getUpdates() {
+        const value1=extractNumberFromString(value.toString());
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                webId: value
+                webId: value1
             })
         }
         console.log("Wtf?",requestOptions);

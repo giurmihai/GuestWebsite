@@ -13,6 +13,24 @@ function Updates(props) {
 
     //Get updates for the current website.
     
+    function extractNumberFromString(str) {
+        let pos;
+        for (let i=0; i<str.length; i++)
+        {
+            if (/^[0-9]$/.test(str[i]))
+            {
+                // nothing
+            }
+            else
+            {
+                pos=i;
+                break;
+            }
+        }
+        let result = str.slice(0, pos);
+        return result
+      }
+
     async function getUpdates() {
         let finishedResp;
         let retries=0;
@@ -23,7 +41,7 @@ function Updates(props) {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        webId: props.value
+                        webId: extractNumberFromString(props.value.toString())
                     })
                 }
                 console.log("Wtf",requestOptions)
