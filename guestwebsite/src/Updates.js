@@ -14,17 +14,28 @@ function Updates(props) {
     //Get updates for the current website.
     
     async function getUpdates() {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                webId: props.value
-            })
+        let finishedResp;
+        let retries=0;
+        while (!finishedResp && retries<=5)
+        {
+            try {
+                const requestOptions = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        webId: props.value
+                    })
+                }
+                console.log("Wtf",requestOptions)
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/updatesWebId`, requestOptions)
+                const data = await response.json();
+                finishedResp=data;
+                setUpdates(data);
+            } catch (error) {
+                retries++;
+            }
         }
-        console.log("Wtf",requestOptions)
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/updatesWebId`, requestOptions)
-        const data = await response.json();
-        setUpdates(data);
+        
     }
 
     function formatDate(dateString) {
