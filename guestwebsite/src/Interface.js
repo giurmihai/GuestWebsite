@@ -52,10 +52,10 @@ function Interface() {
             const resp = await fetch(`${process.env.REACT_APP_API_URL}/getWebsite`, requestDataWebsite)
             const data1 = await resp.json();
 
-            console.log(data1.website.length)
+            console.log(data1.website)
             if (data1.website.length > 0) {
                 for (var i = 0; i < data1.website.length; i++) {
-                    if (data1.website[i].userId == value) {
+                    if (data1.website[i].id == value) {
                         setCorrectUserAndWebsite(true)
                         setCurrentUser(data.user[0])
                         setCurrentWebsite(data1.website[i])
