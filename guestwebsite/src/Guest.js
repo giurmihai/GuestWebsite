@@ -78,7 +78,14 @@ function Guest() {
                         <div className="card text-bg-light mb-3">
                             <div className="card-header"><h5>{currentWebsite.name}</h5></div>
                             <div className="card-body">
+                                
                                 <div id='decription'>
+                                <h6 id='Guestsheader'>Date:</h6>
+                                    {currentWebsite.date}
+                                </div>
+                                <br></br>
+                                <div id='decription'>
+                                <h6 id='Guestsheader'>Description:</h6>
                                     {currentWebsite.description}
                                 </div>
 

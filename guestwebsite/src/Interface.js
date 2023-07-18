@@ -113,26 +113,23 @@ function Interface() {
 
     function extractNumberFromString(str) {
         let pos;
-        for (let i=0; i<str.length; i++)
-        {
-            if (/^[0-9]$/.test(str[i]))
-            {
+        for (let i = 0; i < str.length; i++) {
+            if (/^[0-9]$/.test(str[i])) {
                 // nothing
             }
-            else
-            {
-                pos=i;
+            else {
+                pos = i;
                 break;
             }
         }
         let result = str.slice(0, pos);
         return result
-      }
+    }
 
     //Get updates for the current website.
     const [updates, setUpdates] = useState([])
     async function getUpdates() {
-        const value1=extractNumberFromString(value.toString());
+        const value1 = extractNumberFromString(value.toString());
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -140,25 +137,24 @@ function Interface() {
                 webId: value1
             })
         }
-        console.log("Wtf?",requestOptions);
+        console.log("Wtf?", requestOptions);
         const response = await fetch(`${process.env.REACT_APP_API_URL}/updatesWebId`, requestOptions)
         const data = await response.json();
         console.log(data);
         setUpdates(data);
     }
 
-    const[updateBody,setUpdateBody]=useState('')
-    const[updateSubject,setUpdateSubject]=useState('')
-    async function postUpdate()
-    {
+    const [updateBody, setUpdateBody] = useState('')
+    const [updateSubject, setUpdateSubject] = useState('')
+    async function postUpdate() {
         const fullName = currentUser.name + " " + currentUser.given_name
         const requestOptions = {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({subject:updateSubject, content:updateBody,websiteId:currentWebsite.id,creator:fullName})
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ subject: updateSubject, content: updateBody, websiteId: currentWebsite.id, creator: fullName })
         }
-        
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/updates`,requestOptions);
+
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/updates`, requestOptions);
         const data = await response.json();
         console.log(data);
         getUpdates();
@@ -167,14 +163,14 @@ function Interface() {
     function formatDate(dateString) {
         const date = new Date(dateString);
         return date.toLocaleString('en-US', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit'
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
         });
-      }
+    }
 
 
     return (
@@ -198,18 +194,18 @@ function Interface() {
                                         <hr></hr>
 
                                         <div className='UpdateDiv'>
-                                        {updates.slice().reverse().map((element, index) => (
+                                            {updates.slice().reverse().map((element, index) => (
                                                 <div key={index} className='oneUpdateText'>
                                                     <div className='SubjectUpdate'><b>Subject:</b> {element.subject}</div>
                                                     <div className='CreatorUpdate'><b>Creator:</b> {element.creator}</div>
                                                     <div className='DateUpdate'><b>Date:</b> {formatDate(element.createdAt)}</div>
                                                     <div className='ContentUpdate'><b>Content:</b> {element.content}</div>
-                                                    
+
                                                     <hr></hr>
                                                 </div>
-                                                
+
                                             ))}
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -221,10 +217,18 @@ function Interface() {
                                 <div className="card text-bg-light mb-3">
                                     <div className="card-header">
                                         <h3>{currentWebsite.name}</h3>
-                                        
+
                                     </div>
                                     <div className="card-body">
-                                        <p className="descriereWebsite">{currentWebsite.description} </p>
+                                        <div id='decription'>
+                                            <h6 id='Guestsheader'>Date:</h6>
+                                            {currentWebsite.date}
+                                        </div>
+                                        <br></br>
+                                        <div id='decription'>
+                                            <h6 id='Guestsheader'>Description:</h6>
+                                            {currentWebsite.description}
+                                        </div>
                                         <hr></hr>
                                         <div className='guestsTexts'>
                                             <div className='leftText'>Guests:</div>
